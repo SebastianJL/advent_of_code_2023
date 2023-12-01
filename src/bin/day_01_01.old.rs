@@ -82,7 +82,7 @@ fn parse_u8(input: &str) -> IResult<&str, u8> {
 }
 
 fn main() {
-    let input = "inputs/day_01_01.txt";
+    let input = "inputs/day_01.txt";
     let contents = fs::read_to_string(input).unwrap();
 
     let res = commands(&contents);
