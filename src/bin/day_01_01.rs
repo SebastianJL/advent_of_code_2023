@@ -1,5 +1,3 @@
-use nom::character::complete::{alpha1, line_ending};
-use nom::multi::separated_list0;
 use std::fs;
 
 fn main() {
