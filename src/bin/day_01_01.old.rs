@@ -3,12 +3,11 @@ use std::ops::RangeInclusive;
 
 use nom::branch::alt;
 use nom::bytes::complete::{tag, take_while1};
-use nom::character::complete::{alpha1, alphanumeric1, char, digit1, line_ending, newline, space1};
-use nom::character::{is_alphanumeric, is_oct_digit};
-use nom::multi::{many1, separated_list0, separated_list1};
-use nom::sequence::{separated_pair, tuple};
-use nom::Err::Error as NomError;
+use nom::character::is_alphanumeric;
+use nom::character::complete::{alpha1, char, digit1, line_ending, space1};
 use nom::IResult;
+use nom::multi::{many1, separated_list0};
+use nom::sequence::{separated_pair, tuple};
 
 fn range(i: &str) -> IResult<&str, RangeInclusive<usize>> {
     let (i, (min, max)) = separated_pair(digit1, char('-'), digit1)(i)?;
