@@ -13,7 +13,7 @@ fn main() {
 
             // forward
             for c in line.chars() {
-                if c.is_digit(10) {
+                if c.is_ascii_digit() {
                     digits.push(c);
                     break;
                 } else {
@@ -38,7 +38,7 @@ fn main() {
             buffer.clear();
             // backward
             for c in line.chars().rev() {
-                if c.is_digit(10) {
+                if c.is_ascii_digit(){
                     digits.push(c);
                     break;
                 } else {
@@ -67,7 +67,7 @@ fn main() {
             (num, line)
         })
         .inspect(|numline| println!("{numline:?}"))
-        .map(|(num, line)| num)
+        .map(|(num, _)| num)
         .sum();
     dbg!(sum);
 }

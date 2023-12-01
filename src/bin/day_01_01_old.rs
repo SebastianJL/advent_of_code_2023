@@ -9,13 +9,13 @@ use nom::IResult;
 use nom::multi::{many1, separated_list0};
 use nom::sequence::{separated_pair, tuple};
 
-fn range(i: &str) -> IResult<&str, RangeInclusive<usize>> {
+pub fn range(i: &str) -> IResult<&str, RangeInclusive<usize>> {
     let (i, (min, max)) = separated_pair(digit1, char('-'), digit1)(i)?;
     let (min, max): (usize, usize) = (min.parse().unwrap(), max.parse().unwrap());
     Ok((i, min..=max))
 }
 
-fn marked_indices(i: &str) -> IResult<&str, Vec<usize>> {
+pub fn marked_indices(i: &str) -> IResult<&str, Vec<usize>> {
     let (input, res) = many1(alt((take_while1(|c| c == 'x'), space1)))(i)?;
     let mut i = 0;
     let mut marked = vec![];
@@ -84,9 +84,9 @@ fn main() {
     let input = "inputs/day_01.txt";
     let contents = fs::read_to_string(input).unwrap();
 
-    let res = commands(&contents);
-    dbg!(res);
-    println!("hello");
+    let _res = commands(&contents);
+
+
 
     println!("{:?}", parse_u8("255").unwrap());
 }

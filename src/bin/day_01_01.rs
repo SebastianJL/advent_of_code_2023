@@ -9,7 +9,7 @@ fn main() {
         .map(|line| {
             let mut digits = vec![];
             for c in line.chars() {
-                if c.is_digit(10) {
+                if c.is_ascii_digit() {
                     digits.push(c);
                 }
             }
