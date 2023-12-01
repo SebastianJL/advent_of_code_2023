@@ -1,6 +1,5 @@
 use std::fs;
 
-
 fn main() {
     let input = "inputs/day_01.txt";
     let contents = fs::read_to_string(input).unwrap();
@@ -35,10 +34,12 @@ fn main() {
                     }
                 }
             }
+
             buffer.clear();
+
             // backward
             for c in line.chars().rev() {
-                if c.is_ascii_digit(){
+                if c.is_ascii_digit() {
                     digits.push(c);
                     break;
                 } else {
