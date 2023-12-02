@@ -113,7 +113,7 @@ fn main() {
 
     let mut minimal_sets = vec![];
 
-    'next_game: for game in games {
+    for game in games {
         let mut min_set = CubeSet::default();
         for draw in game.draws {
             if draw.red > min_set.red {

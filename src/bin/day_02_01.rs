@@ -1,12 +1,13 @@
+use std::fs;
+use std::iter::Sum;
+use std::ops::Add;
+
 use nom::branch::alt;
 use nom::bytes::complete::tag;
 use nom::character::complete::{line_ending, space1, u64};
 use nom::multi::separated_list1;
 use nom::sequence::tuple;
 use nom::IResult;
-use std::fs;
-use std::iter::Sum;
-use std::ops::Add;
 
 enum Color {
     Red,
@@ -15,19 +16,19 @@ enum Color {
 }
 
 #[derive(Default, Debug)]
-struct Draw {
+struct CubeSet {
     red: u64,
     green: u64,
     blue: u64,
 }
 
-impl Draw {
-    fn contains(&self, other: Draw) -> bool {
+impl CubeSet {
+    fn contains(&self, other: CubeSet) -> bool {
         self.red >= other.red && self.green >= other.green && self.blue >= other.blue
     }
 }
 
-impl Add for Draw {
+impl Add for CubeSet {
     type Output = Self;
 
     fn add(mut self, rhs: Self) -> Self::Output {
@@ -38,16 +39,16 @@ impl Add for Draw {
     }
 }
 
-impl Sum for Draw {
+impl Sum for CubeSet {
     fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
-        iter.fold(Draw::default(), |a, b| a + b)
+        iter.fold(CubeSet::default(), |a, b| a + b)
     }
 }
 
 #[derive(Debug)]
 struct Game {
     id: u64,
-    draws: Vec<Draw>,
+    draws: Vec<CubeSet>,
 }
 
 fn color(input: &str) -> IResult<&str, Color> {
@@ -60,20 +61,20 @@ fn color(input: &str) -> IResult<&str, Color> {
     }
 }
 
-fn number_and_color(input: &str) -> IResult<&str, Draw> {
+fn number_and_color(input: &str) -> IResult<&str, CubeSet> {
     let (input, number) = u64(input)?;
     let (input, _) = space1(input)?;
     let (input, color) = color(input)?;
     let res = match color {
-        Color::Red => Draw {
+        Color::Red => CubeSet {
             red: number,
             ..Default::default()
         },
-        Color::Green => Draw {
+        Color::Green => CubeSet {
             green: number,
             ..Default::default()
         },
-        Color::Blue => Draw {
+        Color::Blue => CubeSet {
             blue: number,
             ..Default::default()
         },
@@ -81,7 +82,7 @@ fn number_and_color(input: &str) -> IResult<&str, Draw> {
     Ok((input, res))
 }
 
-fn draw(input: &str) -> IResult<&str, Draw> {
+fn draw(input: &str) -> IResult<&str, CubeSet> {
     let (input, draws) = separated_list1(tag(", "), number_and_color)(input)?;
     Ok((input, draws.into_iter().sum()))
 }
@@ -106,7 +107,7 @@ fn main() {
 
     dbg!(&games);
 
-    let test_bag = Draw {
+    let test_bag = CubeSet {
         red: 12,
         green: 13,
         blue: 14,
