@@ -51,7 +51,7 @@ fn main() {
                 (u + 1, v),
                 (u + 1, v - 1),
                 (u, v - 1),
-                (u-1, v - 1),
+                (u - 1, v - 1),
             ]
             .into_iter()
             .filter(|&(u, v)| u >= 0 && v >= 0 && u < nrows as isize && v < ncols as isize)
