@@ -50,7 +50,7 @@ fn main() {
         let matches = copies[i].matches;
         let repeat = copies[i].repeat;
         // for j in i+1..(i + 1 + matches as usize) {
-        for copy in copies.iter_mut().skip(i+1).take(matches as usize) {
+        for copy in copies.iter_mut().skip(i + 1).take(matches as usize) {
             copy.repeat += repeat;
         }
     }

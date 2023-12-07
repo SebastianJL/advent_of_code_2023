@@ -23,10 +23,6 @@ struct CubeSet {
 }
 
 impl CubeSet {
-    fn contains(&self, other: CubeSet) -> bool {
-        self.red >= other.red && self.green >= other.green && self.blue >= other.blue
-    }
-
     fn power(&self) -> u64 {
         self.red * self.green * self.blue
     }
@@ -51,7 +47,7 @@ impl Sum for CubeSet {
 
 #[derive(Debug)]
 struct Game {
-    id: u64,
+    _id: u64,
     draws: Vec<CubeSet>,
 }
 
@@ -92,9 +88,9 @@ fn draw(input: &str) -> IResult<&str, CubeSet> {
 }
 
 fn game(input: &str) -> IResult<&str, Game> {
-    let (input, (_, id, _)) = tuple((tag("Game "), u64, tag(": ")))(input)?;
+    let (input, (_, _id, _)) = tuple((tag("Game "), u64, tag(": ")))(input)?;
     let (input, draws) = separated_list1(tag("; "), draw)(input)?;
-    let res = Game { id, draws };
+    let res = Game { _id, draws };
     Ok((input, res))
 }
 

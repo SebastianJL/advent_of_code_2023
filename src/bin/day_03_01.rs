@@ -57,7 +57,7 @@ fn main() {
             .filter(|&(u, v)| u >= 0 && v >= 0 && u < nrows as isize && v < ncols as isize)
             .map(|(u, v)| (u as usize, v as usize));
 
-            if marked == false {
+            if !marked {
                 let num_marked_cells = checked_indices
                     .flat_map(|index| engine_schematic.get(index))
                     .flat_map(|&c| if c == SYMBOL_CHAR { Some(c) } else { None })

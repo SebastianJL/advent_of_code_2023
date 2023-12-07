@@ -7,7 +7,7 @@ use std::collections::HashSet;
 use std::fs;
 
 struct Card {
-    id: u32,
+    _id: u32,
     winning: HashSet<u32>,
     have: HashSet<u32>,
 }
@@ -17,13 +17,13 @@ fn numbers(input: &str) -> IResult<&str, Vec<u32>> {
 }
 
 fn card(input: &str) -> IResult<&str, Card> {
-    let (input, id) = preceded(tuple((tag("Card"), space1)), u32)(input)?;
+    let (input, _id) = preceded(tuple((tag("Card"), space1)), u32)(input)?;
     let (input, _) = tuple((tag(":"), space1))(input)?;
     let (input, (winning, have)) =
         separated_pair(numbers, tuple((tag(" |"), space1)), numbers)(input)?;
-    let winning = HashSet::from_iter(winning.into_iter());
-    let have = HashSet::from_iter(have.into_iter());
-    Ok((input, Card { id, winning, have }))
+    let winning = HashSet::from_iter(winning);
+    let have = HashSet::from_iter(have);
+    Ok((input, Card { _id, winning, have }))
 }
 
 fn parse_cards(input: &str) -> Vec<Card> {
